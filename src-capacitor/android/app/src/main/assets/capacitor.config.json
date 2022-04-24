@@ -1,0 +1,7 @@
+{
+  "appId": "org.ciclope.simpledaily.app",
+  "appName": "simple_daily_app",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "www"
+}
