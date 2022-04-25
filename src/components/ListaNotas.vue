@@ -62,18 +62,34 @@ export default defineComponent({
       selected.value = -1
       const index = evt.target.dataset.id;
       notas.value[index].setChecked(true);
+      saveChanges( index );
     }
 
     const setUnChecked = ({evt}) => {
       selected.value = -1
       const index = evt.target.dataset.id;
       notas.value[index].setChecked(false);
+      saveChanges( index );
     }
 
     const setSelected = ({evt}) => {
       const index = parseInt(evt.target.dataset.id);
       if( index === selected.value ) selected.value = -1;
       else selected.value = index;
+    }
+
+    const saveChanges = async (index) => {
+      try {
+        console.log(`%c Salvando cambios`, 'color: yellow');
+        const nota = notas.value[index];
+        nota.setDate();
+        await db.notas.where("id").equals(nota.id)
+          .modify( (value, ref) => {
+            ref.value = new Nota( nota.getData() );
+          });
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     const deleteNota = (index) => {
